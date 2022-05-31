@@ -72,9 +72,9 @@ function Header({ children }) {
         sx={{
           position: "relative",
           mt: -8,
-          mx: 3,
+          mx: 1,
           py: 2,
-          px: 2,
+          px: 1,
         }}
       >
         <Grid container spacing={3} alignItems="center">

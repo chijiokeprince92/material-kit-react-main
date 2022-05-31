@@ -29,6 +29,13 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import Posts from "layouts/post/Posts";
+import Maps from "layouts/maps/Maps";
+import Jobs from "layouts/jobs/Jobs";
+import Messages from "layouts/messages/Messages";
+import Bookmark from "layouts/bookmark/Bookmarks";
+import Groups from "layouts/groups/Groups";
+import School from "layouts/school/School";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -41,6 +48,70 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/profile",
+    component: <Profile />,
+  },
+  {
+    type: "collapse",
+    name: "Posts",
+    key: "posts",
+    icon: <Icon fontSize="small">feed</Icon>,
+    route: "/posts",
+    component: <Posts />,
+  },
+  {
+    type: "collapse",
+    name: "Messages",
+    key: "messages",
+    icon: <Icon fontSize="small">message</Icon>,
+    route: "/messages",
+    component: <Messages />,
+  },
+  {
+    type: "collapse",
+    name: "Maps",
+    key: "maps",
+    icon: <Icon fontSize="small">public</Icon>,
+    route: "/maps",
+    component: <Maps />,
+  },
+  {
+    type: "collapse",
+    name: "School",
+    key: "school",
+    icon: <Icon fontSize="small">school</Icon>,
+    route: "/school",
+    component: <School />,
+  },
+  {
+    type: "collapse",
+    name: "Jobs",
+    key: "jobs",
+    icon: <Icon fontSize="small">workoutline</Icon>,
+    route: "/jobs",
+    component: <Jobs />,
+  },
+  {
+    type: "collapse",
+    name: "Groups",
+    key: "groups",
+    icon: <Icon fontSize="small">groups</Icon>,
+    route: "/groups",
+    component: <Groups />,
+  },
+  {
+    type: "collapse",
+    name: "Bookmark",
+    key: "bookmark",
+    icon: <Icon fontSize="small">bookmark</Icon>,
+    route: "/bookmark",
+    component: <Bookmark />,
   },
   {
     type: "collapse",
@@ -73,14 +144,6 @@ const routes = [
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/notifications",
     component: <Notifications />,
-  },
-  {
-    type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
   },
   {
     type: "collapse",

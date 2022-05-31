@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useContext, useRef } from "react";
+import axios from "axios";
+import { AuthContext } from "../../../context/AuthContext";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -28,6 +30,30 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
+  const email = useRef();
+  const password = useRef();
+  const { isFetching, dispatch } = useContext(AuthContext);
+
+  const loginCall = async (userCredential, dispatch) => {
+    dispatch({ type: "LOGIN_START" });
+    try {
+      const res = await axios.post("/auth/login", userCredential);
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+    } catch (err) {
+      dispatch({ type: "LOGIN_FAILURE", payload: err });
+    }
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log("Form Input value: ",email.current.value, password.current.value );
+    loginCall(
+      { email: email.current.value, password: password.current.value },
+      dispatch
+    );
+  };
+
+
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -36,7 +62,7 @@ function Basic() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          bgColor="success"
           borderRadius="lg"
           coloredShadow="info"
           mx={2}
@@ -67,12 +93,12 @@ function Basic() {
           </Grid>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
+          <MDBox component="form" role="form" onSubmit={handleClick}>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput type="email" label="Email" inputRef={email} fullWidth />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput type="password" label="Password" inputRef={password} fullWidth />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -87,7 +113,7 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton variant="gradient" color="info" type="submit" fullWidth>
                 sign in
               </MDButton>
             </MDBox>
