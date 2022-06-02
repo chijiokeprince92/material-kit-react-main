@@ -1,8 +1,18 @@
-import React from 'react'
+import React from 'react';
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import MDBox from "../../components/MDBox";
+import MDTypography from "../../components/MDTypography";
+
 
 const Jobs = () => {
   return (
-    <div>Jobs</div>
+    <DashboardLayout>
+    <DashboardNavbar/>
+    <MDBox>
+      <MDTypography>Jobs</MDTypography>
+    </MDBox>
+    </DashboardLayout>
   )
 }
 

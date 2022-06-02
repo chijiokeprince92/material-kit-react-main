@@ -1,3 +1,4 @@
+import {useContext } from "react";
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -19,13 +20,16 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+import {AuthContext} from "../../context/AuthContext";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+  const { user } = useContext(AuthContext);
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <p>{user.username}</p>
       <MDBox py={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={3}>

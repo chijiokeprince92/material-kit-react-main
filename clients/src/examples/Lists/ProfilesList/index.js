@@ -14,7 +14,7 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
 
-function ProfilesList({ title, profiles, shadow }) {
+const ProfilesList = ({ title, profiles, shadow }) => {
   const renderProfiles = profiles.map(({ image, name, description, action }) => (
     <MDBox key={name} component="li" display="flex" alignItems="center" py={1} mb={1}>
       <MDBox mr={2}>

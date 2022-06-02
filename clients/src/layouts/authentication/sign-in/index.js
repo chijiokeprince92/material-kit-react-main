@@ -1,4 +1,5 @@
 import { useState, useContext, useRef } from "react";
+// import { useNavigation } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../context/AuthContext";
 
@@ -29,10 +30,12 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
+  // const history = useNavigation();
   const [rememberMe, setRememberMe] = useState(false);
   const email = useRef();
   const password = useRef();
-  const { isFetching, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
+  // const { isFetching, dispatch } = useContext(AuthContext);
 
   const loginCall = async (userCredential, dispatch) => {
     dispatch({ type: "LOGIN_START" });

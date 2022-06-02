@@ -1,4 +1,9 @@
-// @mui material components
+import { useState, useEffect, useContext} from 'react';
+import axios from "axios";
+// import { useParams } from "react-router";
+import { AuthContext } from "../../context/AuthContext";
+
+// @mui material componentss
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 
@@ -36,7 +41,21 @@ import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 
-function Overview() {
+
+const Overview = () => {
+  const { user} = useContext(AuthContext);
+  const [profile, setProfile] = useState({});
+  const username = user?.username;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`/users?username=${username}`);
+      setProfile(res.data);
+    };
+    fetchUser();
+  }, [username]);
+
+  console.log("USER:",user,"PROFILE", profile)
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -51,26 +70,26 @@ function Overview() {
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <ProfileInfoCard
                 title="profile information"
-                description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
+                description={!user?.desc ? "Add a bio" : user?.desc}
                 info={{
-                  fullName: "Alec M. Thompson",
-                  mobile: "(44) 123 1234 123",
-                  email: "alecthompson@mail.com",
-                  location: "USA",
+                  Username: `@${user?.username}`,
+                  mobile: "+971 522 38 2441",
+                  email: user?.email,
+                  location: user?.city,
                 }}
                 social={[
                   {
-                    link: "https://www.facebook.com/CreativeTim/",
+                    link: "#",
                     icon: <FacebookIcon />,
                     color: "facebook",
                   },
                   {
-                    link: "https://twitter.com/creativetim",
+                    link: "https://twitter.com/prince_cjn",
                     icon: <TwitterIcon />,
                     color: "twitter",
                   },
                   {
-                    link: "https://www.instagram.com/creativetimofficial/",
+                    link: "#",
                     icon: <InstagramIcon />,
                     color: "instagram",
                   },

@@ -23,6 +23,7 @@ import breakpoints from "assets/theme/base/breakpoints";
 import burceMars from "assets/images/bruce-mars.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 
+
 function Header({ children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
@@ -60,8 +61,8 @@ function Header({ children }) {
         sx={{
           backgroundImage: ({ functions: { rgba, linearGradient }, palette: { gradients } }) =>
             `${linearGradient(
-              rgba(gradients.info.main, 0.6),
-              rgba(gradients.info.state, 0.6)
+              rgba(gradients.info.main, 0.2),
+              rgba(gradients.info.state, 0.2)
             )}, url(${backgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "50%",
