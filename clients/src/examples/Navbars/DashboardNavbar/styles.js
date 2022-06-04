@@ -1,4 +1,3 @@
-
 function navbar(theme, ownerState) {
   const { palette, boxShadows, functions, transitions, breakpoints, borders } = theme;
   const { transparentNavbar, absolute, light, darkMode } = ownerState;
@@ -29,12 +28,12 @@ function navbar(theme, ownerState) {
 
       return color;
     },
-    top: absolute ? 0 : pxToRem(12),
+    top: absolute ? 0 : pxToRem(0),
     minHeight: pxToRem(75),
     display: "grid",
     alignItems: "center",
-    borderRadius: borderRadius.xl,
-    paddingTop: pxToRem(8),
+    borderRadius: borderRadius.sm,
+    paddingTop: pxToRem(0),
     paddingBottom: pxToRem(8),
     paddingRight: absolute ? pxToRem(8) : 0,
     paddingLeft: absolute ? pxToRem(16) : 0,

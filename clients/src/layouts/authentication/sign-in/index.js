@@ -49,14 +49,11 @@ function Basic() {
 
   const handleClick = (e) => {
     e.preventDefault();
-    console.log("Form Input value: ",email.current.value, password.current.value );
     loginCall(
       { email: email.current.value, password: password.current.value },
       dispatch
     );
   };
-
-
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 

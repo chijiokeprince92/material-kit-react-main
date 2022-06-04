@@ -34,7 +34,7 @@ function RTL() {
     setDirection(dispatch, "rtl");
 
     return () => setDirection(dispatch, "ltr");
-  }, []);
+  }, [dispatch]);
 
   return (
     <DashboardLayout>

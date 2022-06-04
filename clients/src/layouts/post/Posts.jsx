@@ -1,46 +1,92 @@
-import React, { useEffect,useContext, useState } from 'react';
-import axios from 'axios';
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import React, { useEffect, useContext, useState } from "react";
+import axios from "axios";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
-import {AuthContext} from "../../context/AuthContext";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Avatar from "@mui/material/Avatar";
+import { AuthContext } from "../../context/AuthContext";
+import { useMaterialUIController } from "../../context";
 
+import moment from "moment";
 
-
-// import Card from "@mui/material/Card";
-// import Icon from "@mui/material/Icon";
-
-const Posts = ({username}) => {
-  const [posts, setPosts] = useState([]);
-  const { user } = useContext(AuthContext);
+const Posts = ({ post }) => {
+  const [like, setLike] = useState(post.likes.length);
+  const [isLiked, setIsLiked] = useState(false);
+  const [user, setUser] = useState({});
+  // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const { user: currentUser } = useContext(AuthContext);
+  const [controller] = useMaterialUIController();
+  const { darkMode } = controller;
+  console.log("DarkMode:",darkMode)
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const res = username
-        ? await axios.get("/posts/profile/" + username)
-        : await axios.get("posts/timeline/" + user._id);
-      setPosts(
-        res.data.sort((p1, p2) => {
-          return new Date(p2.createdAt) - new Date(p1.createdAt);
-        })
-      );
+    setIsLiked(post.likes.includes(currentUser._id));
+  }, [currentUser._id, post.likes]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`/users?userId=${post.userId}`);
+      setUser(res.data);
     };
-    fetchPosts();
-  }, [username, user._id]);
+    fetchUser();
+  }, [post.userId]);
+
+  const likeHandler = () => {
+    try {
+      axios.put("/posts/" + post._id + "/like", { userId: currentUser._id });
+    } catch (err) {}
+    setLike(isLiked ? like - 1 : like + 1);
+    setIsLiked(!isLiked);
+  };
+
 
   return (
-    <DashboardLayout>
-    <DashboardNavbar/>
-    <MDBox>
-      {posts.map((post)=> (
-        <MDTypography>{post?.desc}</MDTypography>
-      ))}
-      
-    </MDBox>
-    </DashboardLayout>
-    
-  )
-}
+      <MDBox mx={-2}>
+        <Card>
+          <CardHeader
+              avatar={
+                <Avatar src={user?.img} sx={{ bgcolor: "primary" }} aria-label="profile picture"></Avatar>
+            }
+            action={
+              <IconButton aria-label="Edit button">
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title={user.username}
+            subheader={moment(post?.createdAt).fromNow()}
+            sx={{
+              color: "info.main",
+            }}
+          />
+          {post?.img && (
+          <CardMedia
+            sx={{
+              mx: 0,
+              borderRadius: "0%"
+            }}
+            component="img"
+            height="250"
+            image={post?.img}
+            alt="post"
+          />)}
+          <CardContent>
+            <MDTypography sx={{ mx: -2}}>{post?.desc.slice(0,125)}...</MDTypography>
+          </CardContent>
+          <CardActions>
+          <IconButton aria-label="Like Post">
+          <FavoriteIcon />
+        </IconButton>
+          </CardActions>
+        </Card>
+      </MDBox>
+  );
+};
 
 export default Posts;

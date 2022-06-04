@@ -37,8 +37,8 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 import { AuthContext } from "./context/AuthContext";
 
 // Images
-import brandWhite from "assets/images/logo-ct.png";
-import brandDark from "assets/images/logo-ct-dark.png";
+import brandWhite from "assets/images/socialApp.png";
+import brandDark from "assets/images/socialApp.png";
 
 export default function App() {
   const { user }  = useContext(AuthContext);

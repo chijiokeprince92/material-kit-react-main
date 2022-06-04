@@ -29,7 +29,7 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
-import Posts from "layouts/post/Posts";
+import Feed from "layouts/post/Feed";
 import Maps from "layouts/maps/Maps";
 import Jobs from "layouts/jobs/Jobs";
 import Messages from "layouts/messages/Messages";
@@ -63,7 +63,7 @@ const routes = [
     key: "posts",
     icon: <Icon fontSize="small">feed</Icon>,
     route: "/posts",
-    component: <Posts />,
+    component: <Feed />,
   },
   {
     type: "collapse",

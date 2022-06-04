@@ -118,7 +118,7 @@ const Messages = () => {
           <Grid item xs={12} xl={4}>
             <ProfilesList title="conversations" profiles={profilesListData} shadow={false} />
           </Grid>
-        {conversations.map((c) => (
+          {conversations.map((c) => (
               <div key={c._id} onClick={() => setCurrentChat(c)}>
                 <Conversations conversation={c} currentUser={user} />
               </div>

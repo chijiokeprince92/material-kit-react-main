@@ -55,7 +55,7 @@ const Overview = () => {
     fetchUser();
   }, [username]);
 
-  console.log("USER:",user,"PROFILE", profile)
+  // console.log("USER:",user,"PROFILE", profile)
   return (
     <DashboardLayout>
       <DashboardNavbar />
