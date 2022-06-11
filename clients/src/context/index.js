@@ -1,4 +1,3 @@
-
 /**
   This file is used for controlling the global states of the components,
   you can customize the states for the different components here.
@@ -76,7 +75,7 @@ function MaterialUIControllerProvider({ children }) {
   return <MaterialUI.Provider value={value}>{children}</MaterialUI.Provider>;
 }
 
-// Material Dashboard 2 React custom hook for using context
+// React custom hook for using context
 function useMaterialUIController() {
   const context = useContext(MaterialUI);
 

@@ -24,7 +24,6 @@ const Posts = ({ post }) => {
   const { user: currentUser } = useContext(AuthContext);
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
-  console.log("DarkMode:",darkMode)
 
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
@@ -59,11 +58,8 @@ const Posts = ({ post }) => {
                 <MoreVertIcon />
               </IconButton>
             }
-            title={user.username}
-            subheader={moment(post?.createdAt).fromNow()}
-            sx={{
-              color: "info.main",
-            }}
+            title={<MDTypography variant="body1">{user.username}</MDTypography>}
+            subheader={<MDTypography variant="caption">{moment(post?.createdAt).fromNow()}</MDTypography>}
           />
           {post?.img && (
           <CardMedia
@@ -77,7 +73,7 @@ const Posts = ({ post }) => {
             alt="post"
           />)}
           <CardContent>
-            <MDTypography sx={{ mx: -2}}>{post?.desc.slice(0,125)}...</MDTypography>
+            <MDTypography variant="body2" sx={{ mx: -2}}>{post?.desc.slice(0,140)}...</MDTypography>
           </CardContent>
           <CardActions>
           <IconButton aria-label="Like Post">

@@ -1,4 +1,3 @@
-
 import { forwardRef } from "react";
 
 // prop-types is a library for typechecking of props

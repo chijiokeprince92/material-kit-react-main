@@ -1,6 +1,6 @@
 import React from 'react';
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import NewNavbar from "examples/Navbars/NewNavbar";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
 
@@ -9,7 +9,7 @@ import MDTypography from "../../components/MDTypography";
 const Maps = () => {
   return (
     <DashboardLayout>
-    <DashboardNavbar/>
+    <NewNavbar/>
     <MDBox>
       <MDTypography>Maps</MDTypography>
     </MDBox>

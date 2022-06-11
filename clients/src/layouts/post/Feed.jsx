@@ -3,17 +3,9 @@ import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import Posts from "./Posts";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-// import Card from "@mui/material/Card";
+import NewNavbar from "examples/Navbars/NewNavbar";
 import Grid from "@mui/material/Grid";
 import MDTypography from "../../components/MDTypography";
-import { styled } from "@mui/material/styles";
-
-// const Root = styled(MDTypography)(({ theme }) => ({
-//   [theme.breakpoints.down('sm')]: {
-//     display: 'none',
-//   }
-// }));
 
 const Feed = ({ username }) => {
   const [posts, setPosts] = useState([]);
@@ -35,7 +27,7 @@ const Feed = ({ username }) => {
 
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <NewNavbar/>
       <Grid container sx={{ display: "flex", justifyContent: "center" }}>
         <Grid item xs={12} md={9} lg={7}>
           <Grid
@@ -44,8 +36,8 @@ const Feed = ({ username }) => {
             sx={{ display: "flex", justifyContent: "center" }}
           >
             {posts.map((p) => (
-              <Grid item xs={12} sm={9} md={8} lg={7}>
-                <Posts key={p._id} post={p} />
+              <Grid item xs={12} sm={9} md={8} lg={7} key={p._id}>
+                <Posts post={p} />
               </Grid>
             ))}
           </Grid>
