@@ -10,10 +10,11 @@ import NewNavbar from "examples/Navbars/NewNavbar";
 import MDButton from "../../components/MDButton";
 import MDTypography from "../../components/MDTypography";
 import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
+// import Card from "@mui/material/Card";
 import SendIcon from "@mui/icons-material/Send";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
+
 
 import { AuthContext } from "../../context/AuthContext";
 import { io } from "socket.io-client";

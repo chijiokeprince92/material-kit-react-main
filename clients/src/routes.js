@@ -32,10 +32,12 @@ import SignUp from "layouts/authentication/sign-up";
 import Feed from "layouts/post/Feed";
 import Maps from "layouts/maps/Maps";
 import Jobs from "layouts/jobs/Jobs";
-import Messages from "layouts/messages/Messages";
+// import Messages from "layouts/messages/Messages";
 import Bookmark from "layouts/bookmark/Bookmarks";
 import Groups from "layouts/groups/Groups";
 import School from "layouts/school/School";
+import Cheat from "layouts/messages/Cheat";
+// import Whatsapp from "layouts/messages/whatsapp";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -71,7 +73,7 @@ const routes = [
     key: "messages",
     icon: <Icon fontSize="small">message</Icon>,
     route: "/messages",
-    component: <Messages />,
+    component: <Cheat />,
   },
   {
     type: "collapse",

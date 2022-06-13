@@ -5,13 +5,15 @@ import { red, teal } from '@mui/material/colors';
 
 
 import MDTypography from "../../components/MDTypography";
+// import { TextInput } from "./TextInput";
+// import { MessageLeft, MessageRight } from "./must";
 
 const Chat = ({ message, own }) => {
   const color = red[500];
   const colorTeal = teal[200];
 
   return (
-    <Grid xs={6}>
+    <Grid>
       {own ? (
         <Card sx={{bgcolor: color,  mb: 3,flexWrap: 'wrap', borderRadius: 1, display: 'flex',  flexDirection: 'row', justifyContent: "flex-end" }}>
           <MDTypography>
@@ -28,5 +30,6 @@ const Chat = ({ message, own }) => {
     </Grid>
   );
 };
+
 
 export default Chat;
