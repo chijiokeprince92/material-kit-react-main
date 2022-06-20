@@ -2,11 +2,14 @@ import React from "react";
 import { createStyles, makeStyles } from "@mui/styles";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
+import MDTypography from "../../../components/MDTypography";
+import MDBox from "../../../components/MDBox";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     messageRow: {
-      display: "flex"
+      display: "flex",
+      justifyContent: "flex-start"
     },
     messageRowRight: {
       display: "flex",
@@ -18,10 +21,12 @@ const useStyles = makeStyles((theme) =>
       marginBottom: "10px",
       padding: "10px",
       backgroundColor: "#A8DDFD",
-      width: "60%",
-      //height: "50px",
+      width: "70%",
       textAlign: "left",
-      font: "400 .9em 'Open Sans', sans-serif",
+      overflowWrap: "break-word",
+      wordWrap: "break-word",
+      hyphens: "auto",
+      // font: "400 .9em 'Open Sans', sans-serif",
       border: "1px solid #97C6E3",
       borderRadius: "10px",
       "&:after": {
@@ -54,9 +59,8 @@ const useStyles = makeStyles((theme) =>
       padding: "10px",
       backgroundColor: "#f8e896",
       width: "60%",
-      //height: "50px",
       textAlign: "left",
-      font: "400 .9em 'Open Sans', sans-serif",
+      // font: "400 .9em 'Open Sans', sans-serif",
       border: "1px solid #dfd087",
       borderRadius: "10px",
       "&:after": {
@@ -89,7 +93,7 @@ const useStyles = makeStyles((theme) =>
     },
     messageTimeStampRight: {
       position: "absolute",
-      fontSize: ".85em",
+      fontSize: ".50em",
       fontWeight: "300",
       marginTop: "10px",
       bottom: "-3px",
@@ -114,44 +118,35 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-//avatarが左にあるメッセージ（他人）
-export const MessageLeft = (props) => {
-  const message = props.message ? props.message : "no message";
-  const timestamp = props.timestamp ? props.timestamp : "";
-  const photoURL = props.photoURL ? props.photoURL : "dummy.js";
-  const displayName = props.displayName ? props.displayName : "名無しさん";
+export const MessageLeft = ({message, time, photo, name}) => {
+ 
   const classes = useStyles();
+
   return (
-    <>
       <div className={classes.messageRow}>
-        <Avatar
-          alt={displayName}
-          className={classes.orange}
-          src={photoURL}
-        ></Avatar>
+        {/* <Avatar alt={name} className={classes.orange} src={photo} /> */}
         <div>
-          <div className={classes.displayName}>{displayName}</div>
+          {/* <MDTypography className={classes.displayName}>{name}</MDTypography> */}
           <div className={classes.messageBlue}>
             <div>
-              <p className={classes.messageContent}>{message}</p>
+              <MDTypography variant="body2" className={classes.messageContent}>{message}</MDTypography>
             </div>
-            <div className={classes.messageTimeStampRight}>{timestamp}</div>
+            <div className={classes.messageTimeStampRight}>{time}</div>
           </div>
         </div>
       </div>
-    </>
   );
 };
-//avatarが右にあるメッセージ（自分）
-export const MessageRight = (props) => {
+
+
+export const MessageRight = ({message, time,name}) => {
   const classes = useStyles();
-  const message = props.message ? props.message : "no message";
-  const timestamp = props.timestamp ? props.timestamp : "";
+  
   return (
     <div className={classes.messageRowRight}>
       <div className={classes.messageOrange}>
-        <p className={classes.messageContent}>{message}</p>
-        <div className={classes.messageTimeStampRight}>{timestamp}</div>
+        <MDTypography variant="body2" className={classes.messageContent}>{message}</MDTypography>
+        <div className={classes.messageTimeStampRight}>{time}</div>
       </div>
     </div>
   );

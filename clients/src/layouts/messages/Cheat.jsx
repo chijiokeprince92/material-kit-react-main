@@ -14,15 +14,13 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Chat from "./Chat";
+// import Paper from "@mui/material/Paper";
+// import Chat from "./Chat";
 import Whatsapp from "./whatsapp/whatsapp";
 
 import { TextInput } from "./whatsapp/TextInput";
-// import { MessageLeft, MessageRight } from "./whatsapp/must";
-// import { createStyles, makeStyles } from "@mui/styles";
-// import Paper from "@mui/material/Paper";
 
 import { AuthContext } from "../../context/AuthContext";
 import { io } from "socket.io-client";
@@ -199,7 +197,7 @@ const Cheat = () => {
                   <Whatsapp message={m} own={m.sender === user._id} />
                 </div>
               ))}
-              <TextInput />
+              <TextInput newMessage={newMessage} setNewMessage={setNewMessage} handleSubmit={handleSubmit} />
             </Grid>
           ) : (
             <Grid
@@ -215,7 +213,7 @@ const Cheat = () => {
                   justifyContent: "center",
                 }}
               >
-                Open a conversation to start a chat.
+                Click a conversation to start a chat.
               </MDTypography>
             </Grid>
           )}

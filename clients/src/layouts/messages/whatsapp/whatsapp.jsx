@@ -45,29 +45,24 @@ const useStyles = makeStyles((theme) =>
 export default function Whatsapp({ message, own}) {
   const classes = useStyles();
   return (
-    <div className={classes.container}>
-      <Paper className={classes.paper} zDepth={2}>
-        <Paper id="style-1" className={classes.messagesBody}>
+        <>
           {own ? (
             <MessageRight
             message={message.text}
-            timestamp="02/10 10:05"
-            photoURL={team3}
-            displayName="Kingsley"
+            time="02/10 10:05"
+            // photo={team3}
+            name="You"
             avatarDisp={false}
           />
           ) : (
             <MessageLeft
             message={message.text}
-            timestamp="06/21 10:00"
-            photoURL={team3}
-            displayName="Celestina"
+            time="06/21 10:00"
+            photo={team3}
+            name="Celestina"
             avatarDisp={true}
           />
           )}
-          {/* <TextInput /> */}
-        </Paper>
-      </Paper>
-    </div>
+          </>
   );
 }

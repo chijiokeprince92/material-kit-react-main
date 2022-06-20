@@ -30,9 +30,6 @@ const Messages = () => {
   const { user } = useContext(AuthContext);
   const scrollRef = useRef();
 
-  console.log("Current chat:", currentChat);
-  console.log("Messages:", messages);
-
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getMessage", (data) => {
