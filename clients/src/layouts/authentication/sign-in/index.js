@@ -3,14 +3,14 @@ import { useState, useContext, useRef } from "react";
 import axios from "axios";
 import { AuthContext } from "../../../context/AuthContext";
 
-// react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
+import CircularProgress from '@mui/material/CircularProgress';
 
 // @mui icons
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -30,20 +30,25 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
-  // const history = useNavigation();
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState(false);
   const email = useRef();
   const password = useRef();
-  const { dispatch } = useContext(AuthContext);
-  // const { isFetching, dispatch } = useContext(AuthContext);
+  const { isFetching, dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const loginCall = async (userCredential, dispatch) => {
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post("/auth/login", userCredential);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      navigate('/dashboard');
     } catch (err) {
-      dispatch({ type: "LOGIN_FAILURE", payload: err });
+      console.log("error:",err.response.data);
+      setError(true);
+      dispatch({ type: "LOGIN_STOP" });
+      navigate('/authentication/sign-in')
+      // dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
     }
   };
 
@@ -62,7 +67,7 @@ function Basic() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="success"
+          bgColor="error"
           borderRadius="lg"
           coloredShadow="info"
           mx={2}
@@ -100,6 +105,12 @@ function Basic() {
             <MDBox mb={2}>
               <MDInput type="password" label="Password" inputRef={password} fullWidth />
             </MDBox>
+            <MDBox>
+              {error ?  <MDTypography component="span">Email or password is incorrect</MDTypography>
+              : null
+              }
+             
+            </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
               <MDTypography
@@ -113,8 +124,12 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" type="submit" fullWidth>
-                sign in
+              <MDButton variant="gradient" color="error" type="submit" fullWidth disabled={isFetching}>
+              {isFetching ? (
+                <CircularProgress sx={{color:"inherit", size:"20px"}} />
+              ) : (
+                "Log In"
+              )}
               </MDButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -27,11 +27,11 @@ import {
 
 export default function PrimarySearchAppBar({ absolute, light, isMini }) {
     const { user} = useContext(AuthContext);
+    const navigate = useNavigate();
     const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, fixedNavbar, openConfigurator, darkMode } = controller;
+  const { miniSidenav, fixedNavbar, openConfigurator } = controller;
 
-  const [openMenu, setOpenMenu] = useState(false);
 
   useEffect(() => {
     // Setting the navbar type
@@ -42,6 +42,11 @@ export default function PrimarySearchAppBar({ absolute, light, isMini }) {
     }
   }, [fixedNavbar]);
 
+  const logout = ()=> {
+    localStorage.clear();
+    navigate('/authentication/sign-in');
+  }
+
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
   
@@ -49,7 +54,6 @@ export default function PrimarySearchAppBar({ absolute, light, isMini }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
-  // const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
@@ -59,11 +63,6 @@ export default function PrimarySearchAppBar({ absolute, light, isMini }) {
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
-
-  // const handleMenuClose = () => {
-  //   setAnchorEl(null);
-  //   handleMobileMenuClose();
-  // };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -135,6 +134,17 @@ export default function PrimarySearchAppBar({ absolute, light, isMini }) {
             <SettingsIcon />
         </IconButton>
         <p>Settings</p>
+      </MenuItem>
+      <MenuItem onClick={logout}>
+        <IconButton
+          size="medium"
+          disableRipple
+          aria-label="logout"
+          color="inherit"
+        >
+            <SettingsIcon />
+        </IconButton>
+        <p>Logout</p>
       </MenuItem>
     </Menu>
   );

@@ -5,7 +5,15 @@ import Posts from "./Posts";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import NewNavbar from "examples/Navbars/NewNavbar";
 import Grid from "@mui/material/Grid";
+import SendIcon from "@mui/icons-material/Send";
+import ImageIcon from "@mui/icons-material/Image";
+import RoomIcon from "@mui/icons-material/Room";
+import AddReactionIcon from "@mui/icons-material/AddReaction";
 import MDTypography from "../../components/MDTypography";
+import MDInput from "../../components/MDInput";
+import MDBox from "../../components/MDBox";
+import MDButton from "../../components/MDButton";
+import Share from "./Share";
 
 const Feed = ({ username }) => {
   const [posts, setPosts] = useState([]);
@@ -35,6 +43,9 @@ const Feed = ({ username }) => {
             spacing={6}
             sx={{ display: "flex", justifyContent: "center" }}
           >
+            <Grid item xs={12} md={9} lg={7} sx={{mt: 0, mx:0}}>
+              <Share/>
+            </Grid>
             {posts.map((p) => (
               <Grid item xs={12} sm={9} md={8} lg={7} key={p._id}>
                 <Posts post={p} />
@@ -44,7 +55,6 @@ const Feed = ({ username }) => {
         </Grid>
         <Grid item lg={5} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <MDTypography
-            // ml={-10}
             display={{ xs: "none", sm: "none", md: "none", lg: "block" }}
           >
             Prince is my name, and i am a react web developer, with over 4 years
