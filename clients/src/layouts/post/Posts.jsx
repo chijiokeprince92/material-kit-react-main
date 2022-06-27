@@ -9,10 +9,13 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import IconButton from "@mui/material/IconButton";
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import CommentIcon from "@mui/icons-material/Comment";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Avatar from "@mui/material/Avatar";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { AuthContext } from "../../context/AuthContext";
-import { useMaterialUIController } from "../../context";
+// import { useMaterialUIController } from "../../context";
 
 import moment from "moment";
 
@@ -21,8 +24,8 @@ const Posts = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
   const { user: currentUser } = useContext(AuthContext);
-  const [controller] = useMaterialUIController();
-  const { darkMode } = controller;
+  // const [controller] = useMaterialUIController();
+  // const { darkMode } = controller;
 
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
@@ -39,48 +42,76 @@ const Posts = ({ post }) => {
   const likeHandler = () => {
     try {
       axios.put("/posts/" + post._id + "/like", { userId: currentUser._id });
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
 
-
   return (
-      <MDBox mx={-2}>
-        <Card>
-          <CardHeader
-              avatar={
-                <Avatar src={user?.img} sx={{ bgcolor: "primary" }} aria-label="profile picture"></Avatar>
-            }
-            action={
-              <IconButton aria-label="Edit button">
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title={<MDTypography variant="body1">{user.username}</MDTypography>}
-            subheader={<MDTypography variant="caption">{moment(post?.createdAt).fromNow()}</MDTypography>}
-          />
-          {post?.img && (
+    <MDBox mx={-3}>
+      <Card sx={{ borderRadius: "0%" }}>
+        <CardHeader
+          avatar={
+            <Avatar
+              src={user?.img}
+              sx={{ bgcolor: "primary" }}
+              aria-label="profile picture"
+            ></Avatar>
+          }
+          action={
+            <IconButton aria-label="Edit button">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={
+            <MDTypography variant="body2">
+              {user.username} <CheckCircleRoundedIcon color="info" />
+            </MDTypography>
+          }
+          subheader={
+            <MDTypography variant="caption">
+              {moment(post?.createdAt).fromNow()}
+            </MDTypography>
+          }
+        />
+        {post?.img && (
           <CardMedia
             sx={{
               mx: 0,
-              borderRadius: "0%"
+              borderRadius: "0%",
             }}
             component="img"
             height="250"
             image={post?.img}
             alt="post"
-          />)}
-          <CardContent>
-            <MDTypography variant="body2" sx={{ mx: -2}}>{post?.desc.slice(0,140)}...</MDTypography>
-          </CardContent>
-          <CardActions>
+          />
+        )}
+        <CardContent>
+          <MDTypography variant="body2" sx={{ mx: -2 }}>
+            {post?.desc.slice(0, 140)}...
+          </MDTypography>
+        </CardContent>
+        <CardActions>
           <IconButton aria-label="Like Post">
-          <FavoriteIcon />
-        </IconButton>
-          </CardActions>
-        </Card>
-      </MDBox>
+            {isLiked ? <> <FavoriteIcon color="error" onClick={likeHandler} />&nbsp;
+            <MDTypography variant="caption">
+              {like > 1 ? `You and ${like - 1} other`: `You liked ${user.username}'s post` }
+              </MDTypography></> : 
+             <> <FavoriteBorderIcon onClick={likeHandler} /> &nbsp;
+              <MDTypography variant="caption">
+                {like === 0 ? `Be the first to like ${user.username}'s post` : like === 1 ? `1 person liked this post` : like > 1 ? `${like} people liked this post`: `You and ${like} people` }
+                </MDTypography> 
+              </>  }
+          </IconButton>
+          <IconButton aria-label="Like Post">
+            <CommentIcon style={{color:"#87CEFA"}} />
+            <MDTypography variant="caption">{post?.comment} &nbsp; comments</MDTypography>
+          </IconButton>
+        </CardActions>
+      </Card>
+    </MDBox>
   );
 };
 
