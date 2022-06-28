@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "context/AuthContext";
+
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -10,6 +12,8 @@ import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Icon from "@mui/material/Icon";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -24,9 +28,10 @@ import burceMars from "assets/images/bruce-mars.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 
 
-function Header({ children }) {
+function Header({ children, p }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
+  const {user} = useContext(AuthContext);
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -57,7 +62,7 @@ function Header({ children }) {
         alignItems="center"
         position="relative"
         minHeight="18.75rem"
-        borderRadius="xl"
+        borderRadius="0%"
         sx={{
           backgroundImage: ({ functions: { rgba, linearGradient }, palette: { gradients } }) =>
             `${linearGradient(
@@ -67,13 +72,14 @@ function Header({ children }) {
           backgroundSize: "cover",
           backgroundPosition: "50%",
           overflow: "hidden",
+          mx: -3
         }}
       />
       <Card
         sx={{
           position: "relative",
           mt: -8,
-          mx: 1,
+          mx: -2,
           py: 2,
           px: 1,
         }}
@@ -85,10 +91,10 @@ function Header({ children }) {
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
               <MDTypography variant="h5" fontWeight="medium">
-                Richard Davis
+                {user.username} <CheckCircleRoundedIcon color="info" />
               </MDTypography>
               <MDTypography variant="button" color="text" fontWeight="regular">
-                CEO / Co-Founder
+                Post Graduate Student
               </MDTypography>
             </MDBox>
           </Grid>

@@ -56,65 +56,77 @@ const Share = () => {
               fullWidth
             />
           </Grid>
-          <MDBox component="form" role="form" onSubmit={submitHandler} sx={{width: "100%"}}>
-
-          <Grid container spacing={2}>
-            <Grid
-              item
-              xs={3}
-              sx={{ display: "flex", justifyContent: "center" }}
-            >
+          <MDBox
+            component="form"
+            role="form"
+            onSubmit={submitHandler}
+            sx={{ width: "100%" }}
+          >
+            <Grid container spacing={2}>
+              <Grid
+                item
+                xs={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
                 <label htmlFor="file">
-                <ImageIcon style={{color:"#87CEFA"}} fontSize="medium" />
-    
-                <input
-                  style={{ display: "none" }}
-                  type="file"
-                  id="file"
-                  accept=".png, .jpeg, .jpg"
-                  onChange={(e) => setFile(e.target.files[0])}
-                />
+                  <ImageIcon style={{ color: "#87CEFA" }} fontSize="medium" />
+
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    id="file"
+                    accept=".png, .jpeg, .jpg"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
                 </label>
-            </Grid>
-            <Grid
-              item
-              xs={3}
-              sx={{ display: "flex", justifyContent: "center" }}
-            >
-              <RoomIcon style={{ color: "#FF69B4" }} fontSize="medium" />
-            </Grid>
-            <Grid
-              item
-              xs={3}
-              sx={{ display: "flex", justifyContent: "center" }}
-            >
-              <EmojiEmotionsIcon style={{ color: "#FFFF00" }} fontSize="medium" />
-              
-            </Grid>
-            <Grid
-              item
-              xs={3}
-              sx={{ display: "flex", justifyContent: "center" }}
-            >
-              <MDButton type="submit" size="small" circular={true} iconOnly={true} color="success"><SendIcon fontSize="medium"/></MDButton>
-              
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            {file && (
-              <>
-                <img
-                  style={{ height: "300px" }}
-                  src={URL.createObjectURL(file)}
-                  alt="select post"
+              </Grid>
+              <Grid
+                item
+                xs={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
+                <RoomIcon style={{ color: "#FF69B4" }} fontSize="medium" />
+              </Grid>
+              <Grid
+                item
+                xs={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
+                <EmojiEmotionsIcon
+                  style={{ color: "#FFFF00" }}
+                  fontSize="medium"
                 />
-                <CancelIcon onClick={() => setFile(null)} />
-              </>
-            )}
-          </Grid>
+              </Grid>
+              <Grid
+                item
+                xs={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
+                <MDButton
+                  type="submit"
+                  size="small"
+                  circular={true}
+                  iconOnly={true}
+                  color="success"
+                >
+                  <SendIcon fontSize="medium" />
+                </MDButton>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              {file && (
+                <>
+                  <img
+                    style={{ height: "300px" }}
+                    src={URL.createObjectURL(file)}
+                    alt="select post"
+                  />
+                  <CancelIcon onClick={() => setFile(null)} />
+                </>
+              )}
+            </Grid>
           </MDBox>
         </Grid>
-      
       </Card>
     </MDBox>
   );

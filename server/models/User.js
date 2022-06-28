@@ -43,14 +43,42 @@ const UserSchema = new mongoose.Schema(
     desc: {
       type: String,
       max: 50,
+      dafault: "",
     },
     city: {
       type: String,
       max: 50,
+      default: "",
     },
-    from: {
+    nationality: {
       type: String,
       max: 50,
+      default: "",
+    },
+    course: {
+      type: String,
+      max: 50,
+      dafault: "",
+    },
+    mobile: {
+      type: String,
+      max: 20,
+      dafault: "",
+    },
+    facebook: {
+      type: String,
+      max: 50,
+      dafault: "",
+    },
+    twitter: {
+      type: String,
+      max: 50,
+      dafault: "",
+    },
+    instagram: {
+      type: String,
+      max: 50,
+      dafault: "",
     },
     relationship: {
       type: Number,

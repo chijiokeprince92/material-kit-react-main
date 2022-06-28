@@ -25,11 +25,12 @@ import {AuthContext} from "../../context/AuthContext";
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const { user } = useContext(AuthContext);
+  
 
   return (
     <DashboardLayout>
       <NewNavbar />
-      <p>{user.username}</p>
+      <p>{user?.username}</p>
       <MDBox py={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={3}>

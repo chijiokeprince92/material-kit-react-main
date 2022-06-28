@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext} from 'react';
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 // import { useParams } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
@@ -27,6 +27,7 @@ import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 // Overview page components
 import Header from "layouts/profile/components/Header";
 import PlatformSettings from "layouts/profile/components/PlatformSettings";
+import Edit from "./Edit";
 
 // Data
 import profilesListData from "layouts/profile/data/profilesListData";
@@ -41,11 +42,11 @@ import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 
-
 const Overview = () => {
-  const { user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [profile, setProfile] = useState({});
   const username = user?.username;
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -55,7 +56,6 @@ const Overview = () => {
     fetchUser();
   }, [username]);
 
-  // console.log("USER:",user,"PROFILE", profile)
   return (
     <DashboardLayout>
       <NewNavbar />
@@ -63,9 +63,6 @@ const Overview = () => {
       <Header>
         <MDBox mt={5} mb={3}>
           <Grid container spacing={1}>
-            <Grid item xs={12} md={6} xl={4}>
-              <PlatformSettings />
-            </Grid>
             <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <ProfileInfoCard
@@ -73,23 +70,25 @@ const Overview = () => {
                 description={!user?.desc ? "Add a bio" : user?.desc}
                 info={{
                   Username: `@${user?.username}`,
-                  mobile: "+971 522 38 2441",
+                  Course: user?.course || "MSc. Artificial Intelligent",
+                  mobile: `+ ${user?.mobile}` || "+971 522 38 2441",
                   email: user?.email,
-                  location: user?.city,
+                  location: user?.city || "Bristol",
+                  nationality: user?.nationality || "Add your country",
                 }}
                 social={[
                   {
-                    link: "#",
+                    link: `${user?.facebook}` || "#",
                     icon: <FacebookIcon />,
                     color: "facebook",
                   },
                   {
-                    link: "https://twitter.com/prince_cjn",
+                    link: `${user?.twitter}` || "#",
                     icon: <TwitterIcon />,
                     color: "twitter",
                   },
                   {
-                    link: "#",
+                    link: `${user?.instagram}` || "#",
                     icon: <InstagramIcon />,
                     color: "instagram",
                   },
@@ -99,8 +98,22 @@ const Overview = () => {
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />
             </Grid>
+            <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
+
+            <Grid item xs={12} md={6} xl={4}>
+              {edit ? <Edit /> : null}
+            </Grid>
+            <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
+
+            <Grid item xs={12} md={6} xl={4}>
+              <PlatformSettings />
+            </Grid>
             <Grid item xs={12} xl={4}>
-              <ProfilesList title="conversations" profiles={profilesListData} shadow={false} />
+              <ProfilesList
+                title="conversations"
+                profiles={profilesListData}
+                shadow={false}
+              />
             </Grid>
           </Grid>
         </MDBox>
@@ -202,6 +215,6 @@ const Overview = () => {
       <Footer />
     </DashboardLayout>
   );
-}
+};
 
 export default Overview;

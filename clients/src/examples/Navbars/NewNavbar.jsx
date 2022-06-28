@@ -34,6 +34,12 @@ export default function PrimarySearchAppBar({ absolute, light, isMini }) {
 
 
   useEffect(() => {
+    if(!user) {
+      navigate("/authentication/sign-in");
+    }
+  },[user]);
+
+  useEffect(() => {
     // Setting the navbar type
     if (fixedNavbar) {
       setNavbarType("sticky");
@@ -42,9 +48,9 @@ export default function PrimarySearchAppBar({ absolute, light, isMini }) {
     }
   }, [fixedNavbar]);
 
-  const logout = ()=> {
-    localStorage.clear();
-    navigate('/authentication/sign-in');
+  const logout = async ()=> {
+    await localStorage.clear();
+    await window.location.reload();
   }
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);

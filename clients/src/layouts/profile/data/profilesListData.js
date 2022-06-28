@@ -12,7 +12,7 @@ export default [
     description: "Hi! I need more information..",
     action: {
       type: "internal",
-      route: "/pages/profile/profile-overview",
+      route: "#",
       color: "info",
       label: "reply",
     },
@@ -23,7 +23,7 @@ export default [
     description: "Awesome work, can you..",
     action: {
       type: "internal",
-      route: "/pages/profile/profile-overview",
+      route: "#",
       color: "info",
       label: "reply",
     },
@@ -34,7 +34,7 @@ export default [
     description: "About files I can..",
     action: {
       type: "internal",
-      route: "/pages/profile/profile-overview",
+      route: "#",
       color: "info",
       label: "reply",
     },
@@ -45,7 +45,7 @@ export default [
     description: "Have a great afternoon..",
     action: {
       type: "internal",
-      route: "/pages/profile/profile-overview",
+      route: "#",
       color: "info",
       label: "reply",
     },
@@ -53,10 +53,10 @@ export default [
   {
     image: team3,
     name: "Nick Daniel",
-    description: "Hi! I need more information..",
+    description: "Hi! I need more information concerning the concert..",
     action: {
       type: "internal",
-      route: "/pages/profile/profile-overview",
+      route: "#",
       color: "info",
       label: "reply",
     },

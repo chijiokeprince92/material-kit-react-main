@@ -1,4 +1,4 @@
-
+import { useState } from "react";
 // react-routers components
 import { Link } from "react-router-dom";
 
@@ -24,6 +24,11 @@ function ProfileInfoCard({ title, description, info, social, action, shadow }) {
   const values = [];
   const { socialMediaColors } = colors;
   const { size } = typography;
+  const [edit, showEdit] = useState(false);
+
+  const handleEdit = () => {
+    showEdit(true);
+  }
 
   // Convert this form `objectKey` of the object key in to this `object key`
   Object.keys(info).forEach((el) => {
@@ -77,7 +82,7 @@ function ProfileInfoCard({ title, description, info, social, action, shadow }) {
           {title}
         </MDTypography>
         <MDTypography component={Link} to={action.route} variant="body2" color="secondary">
-          <Tooltip title={action.tooltip} placement="top">
+          <Tooltip title={action.tooltip} placement="top" onClick={handleEdit}>
             <Icon>edit</Icon>
           </Tooltip>
         </MDTypography>
