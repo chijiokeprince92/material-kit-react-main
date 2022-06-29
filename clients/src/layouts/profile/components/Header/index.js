@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "context/AuthContext";
-
+import axios from "axios";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -12,6 +12,7 @@ import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Icon from "@mui/material/Icon";
+import Tooltip from "@mui/material/Tooltip";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 
 
@@ -28,10 +29,12 @@ import burceMars from "assets/images/bruce-mars.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 
 
-function Header({ children, p }) {
+function Header({ children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
   const {user} = useContext(AuthContext);
+  const [file, setFile] = useState(null);
+
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -54,6 +57,31 @@ function Header({ children, p }) {
   }, [tabsOrientation]);
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const newImg = {
+      userId: user._id
+    };
+    if (file) {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "w8aqxx6i");
+      try {
+        await axios
+          .post("https://api.cloudinary.com/v1_1/prestige92/image/upload", data)
+          .then((response) => (newImg.profilePicture = response.data.url));
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    try {
+      await axios.post("/auth/profile/edit", newImg);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <MDBox position="relative" mb={5}>
@@ -87,14 +115,29 @@ function Header({ children, p }) {
         <Grid container spacing={3} alignItems="center">
           <Grid item>
             <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
+            <form onSubmit={submitHandler}>
+              <label htmlFor="file">
+            <Tooltip placement="top">
+              <Icon>edit</Icon>
+            </Tooltip>
+            <input
+                    style={{ display: "none" }}
+                    type="file"
+                    id="file"
+                    accept=".png, .jpeg, .jpg"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+            </label>
+            </form>
+            
           </Grid>
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
               <MDTypography variant="h5" fontWeight="medium">
-                {user.username} <CheckCircleRoundedIcon color="info" />
+                {user?.username} <CheckCircleRoundedIcon color="info" />
               </MDTypography>
               <MDTypography variant="button" color="text" fontWeight="regular">
-                Post Graduate Student
+                {user?.course}
               </MDTypography>
             </MDBox>
           </Grid>

@@ -43,7 +43,9 @@ const Edit = () => {
 
     try {
       await axios.post("/auth/profile/edit", edited);
-      navigate("/profile");
+      
+       await localStorage.clear();
+      navigate("/authentication/sign-in");
     } catch (err) {
       console.log(err);
     }
@@ -51,21 +53,6 @@ const Edit = () => {
 
   return (
     <Card>
-      <MDBox
-        variant="gradient"
-        bgColor="error"
-        borderRadius="lg"
-        coloredShadow="success"
-        mx={2}
-        mt={-3}
-        p={3}
-        mb={1}
-        textAlign="center"
-      >
-        <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-          Edit your profile
-        </MDTypography>
-      </MDBox>
       <MDBox pt={4} pb={3} px={3}>
         <MDBox component="form" role="form" onSubmit={handleClick}>
           <MDBox mb={2}>
@@ -74,7 +61,7 @@ const Edit = () => {
               label="Username"
               variant="standard"
               inputRef={username}
-              value={user?.username}
+              defaultValue={user?.username}
               fullWidth
             />
           </MDBox>
@@ -84,7 +71,7 @@ const Edit = () => {
               label="Email"
               variant="standard"
               inputRef={email}
-              value={user?.email}
+              defaultValue={user?.email}
               fullWidth
             />
           </MDBox>
@@ -94,7 +81,7 @@ const Edit = () => {
               label="Bio"
               variant="standard"
               inputRef={desc}
-              value={user?.desc}
+              defaultValue={user?.desc}
               fullWidth
             />
           </MDBox>
@@ -104,7 +91,7 @@ const Edit = () => {
               label="Location"
               variant="standard"
               inputRef={city}
-              value={user?.city}
+              defaultValue={user?.city}
               fullWidth
             />
           </MDBox>
@@ -114,17 +101,17 @@ const Edit = () => {
               label="Course"
               variant="standard"
               inputRef={course}
-              value={user?.course}
+              defaultValue={user?.course}
               fullWidth
             />
           </MDBox>
           <MDBox mb={2}>
             <MDInput
-              type="number"
+              type="text"
               label="Mobile"
               variant="standard"
               inputRef={mobile}
-              value={user?.mobile}
+              defaultValue={user?.mobile}
               fullWidth
             />
           </MDBox>
@@ -134,7 +121,7 @@ const Edit = () => {
               label="Facebook Link"
               variant="standard"
               inputRef={facebook}
-              value={user?.facebook}
+              defaultValue={user?.facebook}
               fullWidth
             />
           </MDBox>
@@ -144,7 +131,7 @@ const Edit = () => {
               label="Twitter Link"
               variant="standard"
               inputRef={twitter}
-              value={user?.twitter}
+              defaultValue={user?.twitter}
               fullWidth
             />
           </MDBox>
@@ -154,7 +141,7 @@ const Edit = () => {
               label="Instagram Link"
               variant="standard"
               inputRef={instagram}
-              value={user?.instagram}
+              defaultValue={user?.instagram}
               fullWidth
             />
           </MDBox>
@@ -164,20 +151,9 @@ const Edit = () => {
               label="Nationality"
               variant="standard"
               inputRef={nationality}
-              value={user?.nationality}
+              defaultValue={user?.nationality}
               fullWidth
             />
-          </MDBox>
-          <MDBox display="flex" alignItems="center" ml={-1}>
-            <Checkbox />
-            <MDTypography
-              variant="button"
-              fontWeight="regular"
-              color="text"
-              sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-            >
-              &nbsp;&nbsp;I agree the&nbsp;
-            </MDTypography>
           </MDBox>
           <MDBox mt={4} mb={1}>
             <MDButton

@@ -26,8 +26,7 @@ import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 
 // Overview page components
 import Header from "layouts/profile/components/Header";
-import PlatformSettings from "layouts/profile/components/PlatformSettings";
-import Edit from "./Edit";
+import ProfileSettings from "layouts/profile/components/ProfileSettings";
 
 // Data
 import profilesListData from "layouts/profile/data/profilesListData";
@@ -46,7 +45,6 @@ const Overview = () => {
   const { user } = useContext(AuthContext);
   const [profile, setProfile] = useState({});
   const username = user?.username;
-  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -66,12 +64,13 @@ const Overview = () => {
             <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <ProfileInfoCard
+                edit
                 title="profile information"
                 description={!user?.desc ? "Add a bio" : user?.desc}
                 info={{
                   Username: `@${user?.username}`,
                   Course: user?.course || "MSc. Artificial Intelligent",
-                  mobile: `+ ${user?.mobile}` || "+971 522 38 2441",
+                  mobile: user?.mobile || "+971 522 38 2441",
                   email: user?.email,
                   location: user?.city || "Bristol",
                   nationality: user?.nationality || "Add your country",
@@ -99,14 +98,8 @@ const Overview = () => {
               <Divider orientation="vertical" sx={{ mx: 0 }} />
             </Grid>
             <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
-
             <Grid item xs={12} md={6} xl={4}>
-              {edit ? <Edit /> : null}
-            </Grid>
-            <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
-
-            <Grid item xs={12} md={6} xl={4}>
-              <PlatformSettings />
+              <ProfileSettings />
             </Grid>
             <Grid item xs={12} xl={4}>
               <ProfilesList

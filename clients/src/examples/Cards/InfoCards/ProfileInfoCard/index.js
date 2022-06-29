@@ -14,6 +14,8 @@ import Icon from "@mui/material/Icon";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import Edit from "layouts/profile/Edit";
+
 
 // Material Dashboard 2 React base styles
 import colors from "assets/theme/base/colors";
@@ -24,11 +26,12 @@ function ProfileInfoCard({ title, description, info, social, action, shadow }) {
   const values = [];
   const { socialMediaColors } = colors;
   const { size } = typography;
-  const [edit, showEdit] = useState(false);
+  const [edit, setEdit] = useState(false);
 
-  const handleEdit = () => {
-    showEdit(true);
+  const handleEdit = ()=> {
+    setEdit(!edit)
   }
+
 
   // Convert this form `objectKey` of the object key in to this `object key`
   Object.keys(info).forEach((el) => {
@@ -104,6 +107,7 @@ function ProfileInfoCard({ title, description, info, social, action, shadow }) {
             </MDTypography>
             {renderSocial}
           </MDBox>
+          {edit ? <Edit/> : null}
         </MDBox>
       </MDBox>
     </Card>

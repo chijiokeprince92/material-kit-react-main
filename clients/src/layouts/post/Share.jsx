@@ -8,7 +8,6 @@ import ImageIcon from "@mui/icons-material/Image";
 import RoomIcon from "@mui/icons-material/Room";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import CancelIcon from "@mui/icons-material/Cancel";
-// import MDTypography from "../../components/MDTypography";
 import MDInput from "../../components/MDInput";
 import MDBox from "../../components/MDBox";
 import MDButton from "../../components/MDButton";
