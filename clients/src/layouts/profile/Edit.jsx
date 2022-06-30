@@ -44,7 +44,7 @@ const Edit = () => {
     try {
       await axios.post("/auth/profile/edit", edited);
       
-       await localStorage.clear();
+       await localStorage.remove();
       navigate("/authentication/sign-in");
     } catch (err) {
       console.log(err);

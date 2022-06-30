@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import express from "express";
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
@@ -28,6 +29,27 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// //Update Image
+// router.post("/profileimage/edit", async (req, res) => {
+//   const id = req.body._id;
+
+//   const editPhoto = new User({
+//     profilePicture: req.body.profilePicture,
+//     _id: id,
+//   });
+//   console.log("EDited:",editPhoto)
+
+//   try {
+//     if (!mongoose.Types.ObjectId.isValid(id))
+//       return res.status(404).send(`Your profile was not found`);
+
+//     await User.findByIdAndUpdate(id, editPhoto, { new: true });
+//     console.log("saved");
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
+
 //delete user
 router.delete("/:id", async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
@@ -52,6 +74,7 @@ router.get("/", async (req, res) => {
       : await User.findOne({ username: username });
     const { password, updatedAt, ...other } = user._doc;
     res.status(200).json(other);
+    console.log(other);
   } catch (err) {
     res.status(500).json(err);
   }

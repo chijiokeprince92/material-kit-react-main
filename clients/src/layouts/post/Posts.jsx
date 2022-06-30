@@ -24,9 +24,7 @@ const Posts = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
   const { user: currentUser } = useContext(AuthContext);
-  // const [controller] = useMaterialUIController();
-  // const { darkMode } = controller;
-
+  
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
@@ -55,7 +53,7 @@ const Posts = ({ post }) => {
         <CardHeader
           avatar={
             <Avatar
-              src={user?.img}
+              src={user?.profilePicture?.url}
               sx={{ bgcolor: "primary" }}
               aria-label="profile picture"
             ></Avatar>

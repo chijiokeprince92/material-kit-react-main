@@ -22,6 +22,10 @@ const Share = () => {
     const newPost = {
       userId: user._id,
       desc: desc.current.value,
+      img:{
+        url: "",
+        public_id: "",
+      }
     };
     if (file) {
       const data = new FormData();
@@ -30,7 +34,8 @@ const Share = () => {
       try {
         await axios
           .post("https://api.cloudinary.com/v1_1/prestige92/image/upload", data)
-          .then((response) => (newPost.img = response.data.url));
+          .then((response) => (newPost.img.url = response.data.secure_url, 
+            newPost.img.public_id = response.data.public_id));
       } catch (err) {
         console.log(err);
       }

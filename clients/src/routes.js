@@ -34,6 +34,8 @@ import Jobs from "layouts/jobs/Jobs";
 import Groups from "layouts/groups/Groups";
 import School from "layouts/school/School";
 import Cheat from "layouts/messages/Cheat";
+import SignUp from "layouts/authentication/sign-up";
+
 // import Whatsapp from "layouts/messages/whatsapp";
 
 // @mui icons

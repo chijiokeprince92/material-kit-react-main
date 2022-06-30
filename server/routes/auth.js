@@ -48,7 +48,6 @@ router.post("/login", async (req, res) => {
 //EDIT
 router.post("/profile/edit", async (req, res) => {
   const id = req.body._id;
-  console.log("ID: ", id);
 
   const editUser = new User({
     username: req.body.username,
@@ -63,7 +62,6 @@ router.post("/profile/edit", async (req, res) => {
     mobile: req.body.mobile,
     _id: id,
   });
-  console.log("EDited User: ",editUser)
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id))
@@ -75,5 +73,26 @@ router.post("/profile/edit", async (req, res) => {
     console.log(err);
   }
 });
+
+//Update Image
+router.post("/profileimage/edit", async (req, res) => {
+  const id = req.body.id;
+
+  const editPhoto = new User({
+    profilePicture: req.body.profilePicture,
+    _id: id,
+  });
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).send(`Your profile was not found`);
+
+    const resp = await User.findByIdAndUpdate(id, editPhoto, { new: true });
+    console.log("saved");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 
 export default router;

@@ -46,7 +46,7 @@ const Feed = ({ username }) => {
             <Grid item xs={12} md={9} lg={7} sx={{mt: 0, mx:0}}>
               <Share/>
             </Grid>
-            {posts.map((p) => (
+            {posts?.map((p) => (
               <Grid item xs={12} sm={9} md={8} lg={7} key={p._id}>
                 <Posts post={p} />
               </Grid>

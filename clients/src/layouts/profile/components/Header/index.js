@@ -14,18 +14,21 @@ import Tab from "@mui/material/Tab";
 import Icon from "@mui/material/Icon";
 import Tooltip from "@mui/material/Tooltip";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import CancelIcon from "@mui/icons-material/Cancel";
+import SendIcon from "@mui/icons-material/Send";
 
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
+import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
 // Images
-import burceMars from "assets/images/bruce-mars.jpg";
+// import burceMars from "assets/images/bruce-mars.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 
 
@@ -61,7 +64,11 @@ function Header({ children }) {
   const submitHandler = async (e) => {
     e.preventDefault();
     const newImg = {
-      userId: user._id
+      id: user._id,
+      profilePicture: {
+        url: "",
+        public_id: "",
+      }
     };
     if (file) {
       const data = new FormData();
@@ -70,13 +77,13 @@ function Header({ children }) {
       try {
         await axios
           .post("https://api.cloudinary.com/v1_1/prestige92/image/upload", data)
-          .then((response) => (newImg.profilePicture = response.data.url));
+          .then((response) => (newImg.profilePicture.url = response.data.secure_url, newImg.profilePicture.public_id = response.data.public_id ));
       } catch (err) {
         console.log(err);
       }
     }
     try {
-      await axios.post("/auth/profile/edit", newImg);
+      await axios.post("/auth/profileimage/edit", newImg);
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -114,7 +121,7 @@ function Header({ children }) {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
+            <MDAvatar src={user?.profilePicture?.url} alt="profile-image" size="xl" shadow="sm" />
             <form onSubmit={submitHandler}>
               <label htmlFor="file">
             <Tooltip placement="top">
@@ -128,8 +135,34 @@ function Header({ children }) {
                     onChange={(e) => setFile(e.target.files[0])}
                   />
             </label>
+            <Grid
+                item
+                xs={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
+                <MDButton
+                  type="submit"
+                  size="small"
+                  circular={true}
+                  iconOnly={true}
+                  color="success"
+                >
+                  <SendIcon fontSize="medium" />
+                </MDButton>
+              </Grid>
             </form>
-            
+            <Grid item xs={12}>
+              {file && (
+                <>
+                  <img
+                    style={{ height: "300px" }}
+                    src={URL.createObjectURL(file)}
+                    alt="select post"
+                  />
+                  <CancelIcon onClick={() => setFile(null)} />
+                </>
+              )}
+            </Grid>
           </Grid>
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>

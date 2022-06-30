@@ -15,7 +15,6 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import Avatar from '@mui/material/Avatar';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { AuthContext } from "../../context/AuthContext";
-import team3 from "assets/images/team-3.jpg";
 
 import {
     useMaterialUIController,
@@ -207,7 +206,7 @@ export default function PrimarySearchAppBar({ absolute, light, isMini }) {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-                <Avatar alt="profilePics" src={user?.img || team3} />
+                <Avatar alt="profilePics" src={user?.profilePicture?.url} />
     
             </IconButton>
           </Box>
@@ -220,7 +219,7 @@ export default function PrimarySearchAppBar({ absolute, light, isMini }) {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <Avatar alt="profilePics" src={team3} />
+              <Avatar alt="profilePics" src={user?.profilePicture?.url} />
             </IconButton>
           </Box>
         </Toolbar>

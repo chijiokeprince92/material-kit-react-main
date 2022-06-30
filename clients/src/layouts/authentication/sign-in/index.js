@@ -25,6 +25,9 @@ import MDButton from "components/MDButton";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
+// import Cover from "layouts/authentication/sign-up";
+import SignUp from "layouts/authentication/sign-up";
+
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
@@ -141,8 +144,7 @@ function Basic() {
                   variant="button"
                   color="info"
                   fontWeight="medium"
-                  textGradient
-                >
+                  textGradient>
                   Sign up
                 </MDTypography>
               </MDTypography>
