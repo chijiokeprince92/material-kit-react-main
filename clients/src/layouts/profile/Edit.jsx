@@ -4,10 +4,8 @@ import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
-import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox"
 
 const Edit = () => {
     const { user } = useContext(AuthContext);
@@ -42,7 +40,7 @@ const Edit = () => {
     };
 
     try {
-      await axios.post("/auth/profile/edit", edited);
+      await axios.post("/users/profile/edit", edited);
       
        await localStorage.remove();
       navigate("/authentication/sign-in");

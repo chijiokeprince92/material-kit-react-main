@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import {  useNavigate } from "react-router-dom";
 import { AuthContext } from "context/AuthContext";
 import axios from "axios";
 
@@ -12,11 +13,9 @@ import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Icon from "@mui/material/Icon";
-import Tooltip from "@mui/material/Tooltip";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelIcon from "@mui/icons-material/Cancel";
 import SendIcon from "@mui/icons-material/Send";
-
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -31,13 +30,13 @@ import breakpoints from "assets/theme/base/breakpoints";
 // import burceMars from "assets/images/bruce-mars.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 
-
 function Header({ children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [file, setFile] = useState(null);
-
+  const [imageChange, setImageChange] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -61,6 +60,14 @@ function Header({ children }) {
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
+  const showEdit = () => {
+    setImageChange((prev) => !prev);
+  };
+
+  const showMessages = ()=> {
+    navigate("/messages");
+  }
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const newImg = {
@@ -68,7 +75,7 @@ function Header({ children }) {
       profilePicture: {
         url: "",
         public_id: "",
-      }
+      },
     };
     if (file) {
       const data = new FormData();
@@ -77,13 +84,18 @@ function Header({ children }) {
       try {
         await axios
           .post("https://api.cloudinary.com/v1_1/prestige92/image/upload", data)
-          .then((response) => (newImg.profilePicture.url = response.data.secure_url, newImg.profilePicture.public_id = response.data.public_id ));
+          .then(
+            (response) => (
+              (newImg.profilePicture.url = response.data.secure_url)
+              (newImg.profilePicture.public_id = response.data.public_id)
+            )
+          );
       } catch (err) {
         console.log(err);
       }
     }
     try {
-      await axios.post("/auth/profileimage/edit", newImg);
+      await axios.post("/users/profileimage/edit", newImg);
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -99,7 +111,10 @@ function Header({ children }) {
         minHeight="18.75rem"
         borderRadius="0%"
         sx={{
-          backgroundImage: ({ functions: { rgba, linearGradient }, palette: { gradients } }) =>
+          backgroundImage: ({
+            functions: { rgba, linearGradient },
+            palette: { gradients },
+          }) =>
             `${linearGradient(
               rgba(gradients.info.main, 0.2),
               rgba(gradients.info.state, 0.2)
@@ -107,7 +122,7 @@ function Header({ children }) {
           backgroundSize: "cover",
           backgroundPosition: "50%",
           overflow: "hidden",
-          mx: -3
+          mx: -3,
         }}
       />
       <Card
@@ -121,48 +136,12 @@ function Header({ children }) {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <MDAvatar src={user?.profilePicture?.url} alt="profile-image" size="xl" shadow="sm" />
-            <form onSubmit={submitHandler}>
-              <label htmlFor="file">
-            <Tooltip placement="top">
-              <Icon>edit</Icon>
-            </Tooltip>
-            <input
-                    style={{ display: "none" }}
-                    type="file"
-                    id="file"
-                    accept=".png, .jpeg, .jpg"
-                    onChange={(e) => setFile(e.target.files[0])}
-                  />
-            </label>
-            <Grid
-                item
-                xs={3}
-                sx={{ display: "flex", justifyContent: "center" }}
-              >
-                <MDButton
-                  type="submit"
-                  size="small"
-                  circular={true}
-                  iconOnly={true}
-                  color="success"
-                >
-                  <SendIcon fontSize="medium" />
-                </MDButton>
-              </Grid>
-            </form>
-            <Grid item xs={12}>
-              {file && (
-                <>
-                  <img
-                    style={{ height: "300px" }}
-                    src={URL.createObjectURL(file)}
-                    alt="select post"
-                  />
-                  <CancelIcon onClick={() => setFile(null)} />
-                </>
-              )}
-            </Grid>
+            <MDAvatar
+              src={user?.profilePicture?.url}
+              alt="profile-image"
+              size="xl"
+              shadow="sm"
+            />
           </Grid>
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
@@ -174,19 +153,25 @@ function Header({ children }) {
               </MDTypography>
             </MDBox>
           </Grid>
-          <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
+          <Grid item sx={{ ml: "auto" }}>
             <AppBar position="static">
-              <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
+              <Tabs
+                orientation="horizontal"
+                value={tabValue}
+                onChange={handleSetTabValue}
+              >
                 <Tab
-                  label="App"
+                  onClick={showEdit}
+                  label=""
                   icon={
                     <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      home
+                      edit
                     </Icon>
                   }
                 />
                 <Tab
-                  label="Message"
+                onClick={showMessages}
+                  label=""
                   icon={
                     <Icon fontSize="small" sx={{ mt: -0.25 }}>
                       email
@@ -194,7 +179,7 @@ function Header({ children }) {
                   }
                 />
                 <Tab
-                  label="Settings"
+                  label=""
                   icon={
                     <Icon fontSize="small" sx={{ mt: -0.25 }}>
                       settings
@@ -204,6 +189,40 @@ function Header({ children }) {
               </Tabs>
             </AppBar>
           </Grid>
+          {imageChange ? (
+            <Grid item xs={12}>
+              <form onSubmit={submitHandler}>
+                <label htmlFor="file">
+                  <input
+                    // style={{ display: "none" }}
+                    type="file"
+                    id="file"
+                    accept=".png, .jpeg, .jpg"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                </label>
+                <MDButton
+                  type="submit"
+                  size="small"
+                  circular={true}
+                  iconOnly={true}
+                  color="success"
+                >
+                  <SendIcon fontSize="medium" />
+                </MDButton>
+              </form>
+              {file && (
+                <>
+                  <img
+                    style={{ height: "300px", width: "300px" }}
+                    src={URL.createObjectURL(file)}
+                    alt="select post"
+                  />
+                  <CancelIcon onClick={() => setFile(null)} />
+                </>
+              )}
+            </Grid>
+          ) : null}
         </Grid>
         {children}
       </Card>

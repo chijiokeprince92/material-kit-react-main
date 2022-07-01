@@ -21,15 +21,11 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import NewNavbar from "examples/Navbars/NewNavbar";
 import Footer from "examples/Footer";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
-import ProfilesList from "examples/Lists/ProfilesList";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 
 // Overview page components
 import Header from "layouts/profile/components/Header";
 import ProfileSettings from "layouts/profile/components/ProfileSettings";
-
-// Data
-import profilesListData from "layouts/profile/data/profilesListData";
 
 // Images
 import homeDecor1 from "assets/images/home-decor-1.jpg";
@@ -101,13 +97,13 @@ const Overview = () => {
             <Grid item xs={12} md={6} xl={4}>
               <ProfileSettings />
             </Grid>
-            <Grid item xs={12} xl={4}>
+            {/* <Grid item xs={12} xl={4}>
               <ProfilesList
                 title="conversations"
                 profiles={profilesListData}
                 shadow={false}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
         </MDBox>
         <MDBox pt={2} px={2} lineHeight={1.25}>

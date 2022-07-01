@@ -82,7 +82,7 @@ const Posts = ({ post }) => {
             }}
             component="img"
             height="250"
-            image={post?.img}
+            image={post?.img?.url || post?.img}
             alt="post"
           />
         )}

@@ -1,7 +1,6 @@
 import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
-import mongoose from "mongoose";
 
 const router = express.Router();
 
@@ -44,55 +43,5 @@ router.post("/login", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-//EDIT
-router.post("/profile/edit", async (req, res) => {
-  const id = req.body._id;
-
-  const editUser = new User({
-    username: req.body.username,
-    email: req.body.email,
-    desc: req.body.desc,
-    city: req.body.city,
-    course: req.body.course,
-    nationality: req.body.nationality,
-    facebook: req.body.facebook,
-    twitter: req.body.twitter,
-    instagram: req.body.instagram,
-    mobile: req.body.mobile,
-    _id: id,
-  });
-
-  try {
-    if (!mongoose.Types.ObjectId.isValid(id))
-      return res.status(404).send(`Your profile was not found`);
-
-    await User.findByIdAndUpdate(id, editUser, { new: true });
-    console.log("saved");
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-//Update Image
-router.post("/profileimage/edit", async (req, res) => {
-  const id = req.body.id;
-
-  const editPhoto = new User({
-    profilePicture: req.body.profilePicture,
-    _id: id,
-  });
-
-  try {
-    if (!mongoose.Types.ObjectId.isValid(id))
-      return res.status(404).send(`Your profile was not found`);
-
-    const resp = await User.findByIdAndUpdate(id, editPhoto, { new: true });
-    console.log("saved");
-  } catch (err) {
-    console.log(err);
-  }
-});
-
 
 export default router;

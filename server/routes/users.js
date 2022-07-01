@@ -29,26 +29,54 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// //Update Image
-// router.post("/profileimage/edit", async (req, res) => {
-//   const id = req.body._id;
+//EDIT
+router.post("/profile/edit", async (req, res) => {
+  const id = req.body._id;
 
-//   const editPhoto = new User({
-//     profilePicture: req.body.profilePicture,
-//     _id: id,
-//   });
-//   console.log("EDited:",editPhoto)
+  const editUser = new User({
+    username: req.body.username,
+    email: req.body.email,
+    desc: req.body.desc,
+    city: req.body.city,
+    course: req.body.course,
+    nationality: req.body.nationality,
+    facebook: req.body.facebook,
+    twitter: req.body.twitter,
+    instagram: req.body.instagram,
+    mobile: req.body.mobile,
+    _id: id,
+  });
 
-//   try {
-//     if (!mongoose.Types.ObjectId.isValid(id))
-//       return res.status(404).send(`Your profile was not found`);
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).send(`Your profile was not found`);
 
-//     await User.findByIdAndUpdate(id, editPhoto, { new: true });
-//     console.log("saved");
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
+    await User.findByIdAndUpdate(id, editUser, { new: true });
+    console.log("saved");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//Update Image
+router.post("/profileimage/edit", async (req, res) => {
+  const id = req.body.id;
+
+  const editPhoto = new User({
+    profilePicture: req.body.profilePicture,
+    _id: id,
+  });
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).send(`Your profile was not found`);
+
+    await User.findByIdAndUpdate(id, editPhoto, { new: true });
+    console.log("saved");
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 //delete user
 router.delete("/:id", async (req, res) => {
@@ -74,7 +102,6 @@ router.get("/", async (req, res) => {
       : await User.findOne({ username: username });
     const { password, updatedAt, ...other } = user._doc;
     res.status(200).json(other);
-    console.log(other);
   } catch (err) {
     res.status(500).json(err);
   }

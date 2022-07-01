@@ -1,22 +1,21 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Conversations from "./Conversations";
+import Convo from "./Convo";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import NewNavbar from "examples/Navbars/NewNavbar";
-// import MDBox from "../../components/MDBox";
-import MDButton from "../../components/MDButton";
 import MDTypography from "../../components/MDTypography";
+import MDBox from "components/MDBox";
+
 import Grid from "@mui/material/Grid";
-import SendIcon from "@mui/icons-material/Send";
-// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-// import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-// import Paper from "@mui/material/Paper";
+import Card from "@mui/material/Card";
+import Divider from "@mui/material/Divider";
+
 // import Chat from "./Chat";
 import Whatsapp from "./whatsapp/whatsapp";
 
@@ -41,19 +40,16 @@ const Cheat = () => {
     const { children, value, index, ...other } = props;
 
     return (
-      <div
+      <MDBox
+        // sx={{ ml: -2, mr: -2 }}
         role="tabpanel"
         hidden={value !== index}
         id={`simple-tabpanel-${index}`}
         aria-labelledby={`simple-tab-${index}`}
         {...other}
       >
-        {value === index && (
-          <Box sx={{ pt: 3 }}>
-            {children}
-          </Box>
-        )}
-      </div>
+        {value === index && <Box sx={{ pt: 2 }}>{children}</Box>}
+      </MDBox>
     );
   }
 
@@ -158,8 +154,8 @@ const Cheat = () => {
   return (
     <DashboardLayout>
       <NewNavbar />
-      <Box sx={{ width: "100%" }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <MDBox sx={{ width: "100%", mr: -3, ml: -3 }}>
+        <MDBox sx={{width: "100%" }}>
           <Tabs
             value={value}
             textColor="secondary"
@@ -167,25 +163,39 @@ const Cheat = () => {
             onChange={handleChange}
             aria-label="basic tabs example"
             variant="fullWidth"
+            sx={{ width: "100%", mr: -5, borderRadius: "0%"}}
           >
-            <Tab label="Conversation" {...a11yProps(0)} />
-            <Tab label="Chat" {...a11yProps(1)} />
-            <Tab label="Groups" {...a11yProps(2)} />
+            <Tab label="Conversation" {...a11yProps(0)} sx={{px:0}} />
+            <Tab label="Chat" {...a11yProps(1)} sx={{p: 0}} />
+            <Tab label="Groups" {...a11yProps(2)} sx={{px:0}} />
           </Tabs>
-        </Box>
+        </MDBox>
         <TabPanel value={value} index={0}>
           <Grid item xs={12} md={6}>
-            {conversations?.map((c) => (
-              <Grid
-                sx={{ mx: -1 }}
-                item
-                xs={12}
-                key={c._id}
-                onClick={() => setCurrentChat(c)}
-              >
-                <Conversations conversation={c} currentUser={user} />
-              </Grid>
-            ))}
+            <Card sx={{ height: "100%", boxShadow: "none"}}>
+              <MDBox p={2}>
+                <MDBox
+                  component="ul"
+                  display="flex"
+                  flexDirection="column"
+                  p={0}
+                  m={0}
+                >
+                  {conversations?.map((c) => (
+                    <Grid
+                      sx={{ mx: -1 }}
+                      item
+                      xs={12}
+                      key={c._id}
+                      onClick={() => setCurrentChat(c)}
+                    >
+                      <Convo conversation={c} currentUser={user} />
+                      <Divider variant="inset" component="li" />
+                    </Grid>
+                  ))}
+                </MDBox>
+              </MDBox>
+            </Card>
           </Grid>
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -197,7 +207,11 @@ const Cheat = () => {
                   <Whatsapp message={m} own={m.sender === user._id} />
                 </div>
               ))}
-              <TextInput newMessage={newMessage} setNewMessage={setNewMessage} handleSubmit={handleSubmit} />
+              <TextInput
+                newMessage={newMessage}
+                setNewMessage={setNewMessage}
+                handleSubmit={handleSubmit}
+              />
             </Grid>
           ) : (
             <Grid
@@ -205,7 +219,7 @@ const Cheat = () => {
               xs={12}
               md={6}
               xl={4}
-            //   sx={{ display: { xs: "none", md: "block" } }}
+              //   sx={{ display: { xs: "none", md: "block" } }}
             >
               <MDTypography
                 sx={{
@@ -221,8 +235,7 @@ const Cheat = () => {
         <TabPanel value={value} index={2}>
           UWE GROUPS!!!
         </TabPanel>
-      </Box>
-     
+      </MDBox>
     </DashboardLayout>
   );
 };
